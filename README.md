@@ -28,11 +28,20 @@ class Ability
   include Rack::Authorize::Ability
 
   def initialize(user)
-    can :get, "/api/articles" # user can access "/api/things" with GET method
-    can :post, "/api/articles" if user.role == 'writer' # user can post article if he is a writer
-    can :all, "/api/comments" # user can access "/api/comments" with any methods
-    can_get, :all # user can access all api endpoints with GET method
-    can_all, :all if user.is_super? # super user has no restriction
+    can :get, "/api/articles" 
+    # user can access "/api/things" with GET method
+    
+    can :post, "/api/articles" if user.role == 'writer' 
+    # user can post article if he is a writer
+    
+    can :all, "/api/comments" 
+    # user can access "/api/comments" with any methods
+    
+    can_get, :all 
+    # user can access all api endpoints with GET method
+    
+    can_all, :all if user.is_super? 
+    # super user has no restriction
   end
 end
 ```
