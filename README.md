@@ -1,8 +1,6 @@
 # Rack::Authorize
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rack/authorize`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Rack::Authorize is Rack middleware to authorize api access. We know there is Cancan which is great authorization library for Ruby on Rails. But the rules of Cancan are defined for Ruby Class, when we create web services, it's a common task to restrict the access to api endpoints. That's what Rack::Authorize focus on, it's only used for api stuff. Rack::Authorize can used in any Ruby web framework since it's a Rack middleware. Thanks Rack.
 
 ## Installation
 
@@ -22,7 +20,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Define Abilities
+You can define ability with `can` macros, which inspired by Cancan. Also you can use `can_get`, `can_post` helpers to define conveniently.
+
+```ruby
+class Ability
+  include Rack::Authorize::Ability
+
+  def initialize(user)
+    can :get, "/api/articles" # user can access "/api/things" with GET method
+    can :post, "/api/articles" if user.role == 'writer' # user can post article if he is a writer
+    can :all, "/api/comments" # user can access "/api/comments" with any methods
+    can_get, :all # user can access all api endpoints with GET method
+    can_all, :all if user.is_super? # super user has no restriction
+  end
+end
+```
+
+### Use Rack middleware
+As a Rack middleware, you can use Rack::Authorize in any Rack compatible framework, what you need to do is just use this middleware at appropriate position.
+
+```ruby
+use Rack::Authorize do |method, path|
+  ability = Ability.new(@current_user)
+  ability.can?(method, path)
+end
+```
 
 ## Development
 

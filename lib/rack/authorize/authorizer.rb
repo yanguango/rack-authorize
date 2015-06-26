@@ -2,17 +2,15 @@ Bundler.require
 
 module Rack::Authorize
   class Authorizer
-    def initialize(app, ability_proc)
+    def initialize(app, &block)
       @app = app
-      @ability_proc = ability_proc
+      @block = block
     end
 
     def call(env)
       method = env["REQUEST_METHOD"]
       path = env["PATH_INFO"]
-      ability = @ability_proc.call
-      p ability
-      return [403, {}, ["Access Forbidden"]] unless ability.can?(method, path)
+      return [403, {}, ["Access Forbidden"]] unless @block.call(method, path)
       @app.call(env)
     end
   end
