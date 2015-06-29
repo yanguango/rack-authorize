@@ -58,6 +58,52 @@ use Rack::Authorize do |method, path|
 end
 ```
 
+### Framework Integration
+### Sinatra
+```ruby
+class App < Sinatra::Base
+  use Rack::Auth::Basic do |username, password|
+    @current_user ||= User.authenticate!(username, password)
+  end
+
+  use Rack::Authorize do |method, path|
+    ability = Ability.new(@current_user)
+    ability.can?(method, path)
+  end
+
+  get '/api' do
+    "Hello World!"
+  end
+end
+```
+
+### Grape with Rails
+```ruby
+class AdminAPI < Grape::API
+
+  version 'v1', using: :header
+  format :json
+  prefix 'api'
+  
+  namespace :admin do
+    use Rack::Auth::Basic do |username, password|
+      @current_use ||= AdminUser.authenticate!(username, password)
+    end
+
+    use Rack::Authorize do |method, path|
+      ability = Ability.new(@current_user)
+      ability.can?(method, path)
+    end
+    
+    resources :users do
+      get '/' do
+        "Hello World!"
+      end
+    end
+  end
+end
+```
+
 ## Todo
 * Path prefix
 * Api endpoint whitelist
