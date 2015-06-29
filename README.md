@@ -7,8 +7,10 @@ Rack::Authorize is Rack middleware to authorize api access. We know there is Can
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rack-authorize'
+gem 'rack-authorize', :git => 'git@github.com:yanguango/rack-authorize.git'
 ```
+
+This gem is still in development, so it's not posted to rubygems.org
 
 And then execute:
 
