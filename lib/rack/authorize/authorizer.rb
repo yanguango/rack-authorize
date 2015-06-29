@@ -1,5 +1,3 @@
-Bundler.require
-
 module Rack::Authorize
   class Authorizer
     def initialize(app, &block)
