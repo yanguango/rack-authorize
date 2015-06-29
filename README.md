@@ -1,6 +1,6 @@
 # Rack::Authorize
 
-Rack::Authorize is Rack middleware to authorize api access. We know there is Cancan which is great authorization library for Ruby on Rails. But the rules of Cancan are defined for Ruby Class, when we create web services, it's a common task to restrict the access to api endpoints. That's what Rack::Authorize focus on, it's only used for api stuff. Rack::Authorize can used in any Ruby web framework since it's a Rack middleware. Thanks Rack.
+Rack::Authorize is a Rack middleware to authorize api access. We know there is Cancan which is a great authorization library for Ruby on Rails. But the rules of Cancan are defined for Ruby Class, when we create web services, it's a common task to restrict the access to api endpoints. That's what Rack::Authorize focus on, it's only used for api stuff. Rack::Authorize can be used in any Ruby web framework since it's a Rack middleware. Thanks Rack.
 
 ## Installation
 
